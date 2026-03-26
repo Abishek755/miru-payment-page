@@ -8,26 +8,29 @@
 <h2>Loading Payment...</h2>
 
 <script>
-window.onload = function() {
+function startPayment() {
 
-    const params = new URLSearchParams(window.location.search);
-    const amount = params.get("amount") || "100";
+    var urlParams = new URLSearchParams(window.location.search);
+    var amount = urlParams.get("amount") || "100";
 
-    const options = {
-        api_key: "1003.3fecbd31d1ec232867c967de731006e6.abb5b39f6f778e0744d116626d488c9e",
-        amount: parseInt(amount) * 100,
-        currency: "INR",
-        name: "Miru Cravings",
-        description: "Food Order",
+    var options = {
+        "api_key": "YOUR_API_KEY_HERE",
+        "amount": amount * 100,
+        "currency": "INR",
+        "name": "Miru Cravings",
+        "description": "Food Order",
 
-        handler: function (response) {
-            alert("Payment Success: " + response.payment_id);
+        "handler": function (response) {
+            alert("Payment Successful: " + response.payment_id);
         }
     };
 
-    const zp = new ZohoPayments(options);
+    var zp = new ZohoPayments(options);
     zp.open();
-};
+}
+
+// Delay execution (IMPORTANT FIX)
+setTimeout(startPayment, 1000);
 </script>
 
 </body>
