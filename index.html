@@ -5,7 +5,9 @@
 </head>
 <body>
 
-<h2>Loading Payment...</h2>
+<h2>Redirecting to Payment...</h2>
+
+<button id="payBtn" style="display:none;">Pay</button>
 
 <script>
 function startPayment() {
@@ -14,23 +16,30 @@ function startPayment() {
     var amount = urlParams.get("amount") || "100";
 
     var options = {
-        "api_key": "YOUR_API_KEY_HERE",
-        "amount": amount * 100,
-        "currency": "INR",
-        "name": "Miru Cravings",
-        "description": "Food Order",
+        api_key: "YOUR_API_KEY_HERE",
+        amount: parseInt(amount) * 100,
+        currency: "INR",
+        name: "Miru Cravings",
+        description: "Food Order",
 
-        "handler": function (response) {
+        handler: function (response) {
             alert("Payment Successful: " + response.payment_id);
         }
     };
 
     var zp = new ZohoPayments(options);
-    zp.open();
+
+    document.getElementById("payBtn").onclick = function() {
+        zp.open();
+    };
+
+    // simulate user click (IMPORTANT)
+    setTimeout(function() {
+        document.getElementById("payBtn").click();
+    }, 1000);
 }
 
-// Delay execution (IMPORTANT FIX)
-setTimeout(startPayment, 1000);
+startPayment();
 </script>
 
 </body>
